@@ -31,14 +31,14 @@
 
 ; reverse number TODO finish
 (define (reverse n)
-  (define (reverser n a)
+  (define (reverser n a res)
     (if (< n 10)
         n
-        (+ (* (expt 10 (- a 1))
-                       (remainder n 10)) (reverser (quotient n 10)
+        (+ res (reverser (quotient n 10)
                     (- a 1)
-                    ))))
-    (reverser n (digits n)))
+                    (* (power 10 (- a 1))
+                       (remainder n 10))))))
+    (reverser n (digits n) 0))
 
 ;prime
 (define (prime? n)
