@@ -1,0 +1,14 @@
+#lang racket
+; finds sum of numbers ( numbers is a list )
+(define (sum numbers)
+  (if (null? numbers)
+      0
+      (+ (first numbers) (sum (rest numbers)))))
+
+; is element a member of list
+(define (member? x lst)
+  (cond
+    [(null? lst) #f]
+    [(= (first lst) x) #t]
+    [else (member? x (rest lst))]))
+

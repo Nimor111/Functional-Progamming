@@ -1,9 +1,0 @@
-#lang racket
-(define (prime n)
-  (define (helper n a)
-    (cond
-      [(= n 1) #f]
-      [(= a n) #t]
-      [(= 0 (remainder n a)) #f]
-      [else (helper n (+ a 1))]))
-  (helper n 2))

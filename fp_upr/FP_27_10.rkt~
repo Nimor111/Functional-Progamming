@@ -1,0 +1,7 @@
+#lang racket
+(define (list-of-numbers n)
+  (define (helper counter)
+  (if (= counter n)
+      (list n)
+      (cons counter (helper (+ 1 counter)))))
+  (helper 1))
