@@ -1,5 +1,5 @@
 #lang racket
-; variadic function ( with variable number of args )
+; Variadic function ( with variable number of args )
  (define (f . xs)
     (if (null? xs)
         (error "No args given")
