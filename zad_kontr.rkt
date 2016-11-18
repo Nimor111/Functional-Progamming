@@ -42,8 +42,20 @@
     [(null? (rest lst)) #t]
     [(<= (second lst) (first lst)) #f]
     [else (isinc? (rest lst))]))
-    
-    
+
+(define (all-sums lst)
+  (dedup (map (λ (x) (apply + x)) (filter (λ (x) (not (equal? x '()))) (combinations lst)))))
+
+(define (partial2 f x)
+  (lambda (y) (f x y))) 
+
+(define (diff x y)
+  (not (equal? x y)))
+
+(define (dedup xs)
+  (if (null? xs)
+      '()
+      (cons (first xs) (dedup (filter (partial2 diff (first xs)) xs)))))
 
 
   
