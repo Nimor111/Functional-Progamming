@@ -36,8 +36,8 @@
       (+ (* (expt base pow) (first num)) (helper (rest num) base (- pow 1)))))
   (helper (make-list-from-number x) n (- (length (make-list-from-number x)) 1)))
 
-; (convert 173 8 10)
-; (convert 123 10 2)
-; (convert 173 8 2)
-; (convert 1111011 2 8)
+ (convert 173 8 10)
+ (convert 123 10 2)
+ (convert 173 8 2)
+ (convert 1111011 2 8)
   

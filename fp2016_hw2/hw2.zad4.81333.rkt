@@ -55,3 +55,5 @@
 (define (max-length-lst xs)
   (filter (λ (x) (equal? (length x)
   (apply max (map (λ (x) (length x)) xs)))) xs))
+
+(max-cycle g 1)
