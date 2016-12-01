@@ -87,11 +87,11 @@
 (define (bfs v g)
   (define (get-next-level current visited)
     (apply append (map (lambda (u)
-                         (filter (lambda (v) (not (member v visited)))
+                         (filter (lambda (v) (not (member v (append current visited))))
                                  (successors u g))) current)))
   (define (helper current visited)
     (let [(next-level (get-next-level current visited))]
       (if (null? next-level)
           (append visited current)
           (helper next-level (append visited current)))))
-  (helper (list v) (list v)))
+  (helper (list v) '()))
