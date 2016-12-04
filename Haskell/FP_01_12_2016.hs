@@ -1,7 +1,7 @@
 main :: IO ()
 main = do
   print(fib 2)
-  print(prime_interval 2 10)
+  print(primeInterval 2 10)
 
 -- Fibonacci recursively
 fib :: Integer -> Integer
