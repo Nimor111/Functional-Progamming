@@ -1,7 +1,7 @@
 main :: IO ()
 main = do
   print(fib 2)
-  print(prime_interval 2 10)
+  print(primeInterval 2 10)
 
 -- Fibonacci recursively
 fib :: Integer -> Integer
@@ -26,10 +26,10 @@ digits n = helper n 0
 
 numDigs :: Integer -> Integer
 numDigs 0 = 0
-numDigs n = 1 + num_digs (n `div` 10)
+numDigs n = 1 + numDigs (n `div` 10)
 
 reverse' :: Integer -> Integer
-reverse' n = helper n 0 (num_digs n - 1)
+reverse' n = helper n 0 (numDigs n - 1)
   where
     helper :: Integer -> Integer -> Integer -> Integer
     helper n new pow = if n < 10
@@ -62,7 +62,7 @@ sumElems xs  =
     else head xs + sumElems (tail xs)
 
 sumElems2 :: [Int] -> Int
-sumElems2 = foldr sum  0 xs
+sumElems2 = sum 
 
 removeElem :: Int -> [Int] -> [Int]
 removeElem _ [] = []
