@@ -27,7 +27,6 @@ digitIn xs x = x == lastDigit || digitIn x butLast
     lastDigit = xs `mod` 10
     butLast = xs `div` 10
 
- 
 containsDigits :: Int -> Int -> Bool
 containsDigits _ 0 = True
 containsDigits x y = digitIn lastDigit x && containsDigits x butLast
@@ -56,6 +55,9 @@ productOfDigits2 = helper 1 -- apparently you can delete the argument
 -- helper function for interesting number
 findDivisors :: Integer -> [Integer]
 findDivisors n = [x | x <- [1..n-1], n `mod` x == 0]
+
+findDivisors2 :: Integer -> [Integer]
+findDivisors2 n = filter (\x -> n `mod` x == 0) [1..n-1]
 
 interestingNumber :: Integer -> Bool
 interestingNumber n = (n > 1) && sum (findDivisors (sum (findDivisors n))) == n 
