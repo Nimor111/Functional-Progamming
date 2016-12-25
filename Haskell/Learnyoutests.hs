@@ -22,7 +22,7 @@ zip' (x:xs) (y:ys) = (x, y) : zip' xs ys
 
 elem' :: Eq a => a -> [a] -> Bool
 elem' _ [] = False
-elem' y (x:xs) = if y == x then True else elem' y xs
+elem' y (x:xs) = y == x || elem' y xs
 
 quickSort :: Ord a => [a] -> [a]
 quickSort [] = []
