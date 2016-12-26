@@ -1,1 +1,1 @@
-https://learnyouahaskell.com
+http://learnyouahaskell.com
