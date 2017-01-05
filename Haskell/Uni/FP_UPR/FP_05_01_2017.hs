@@ -1,3 +1,5 @@
+import Data.Maybe
+
 data NTree = NilT | 
   Node Int NTree NTree
 
@@ -31,19 +33,19 @@ levelK NilT _ = []
 levelK (Node x lt rt) 0 = [x]
 levelK (Node _ lt rt) level = levelK lt (level - 1) ++ levelK rt (level - 1)
 
-valueT :: NTree -> Int
-valueT NilT = -1
-valueT (Node x _ _) = x
+valueT :: NTree -> Maybe Int
+valueT NilT = Nothing 
+valueT (Node x _ _) = Just x
 
-getEdges :: NTree -> [(Int, Int)]
+getEdges :: NTree -> [(Maybe Int, Maybe Int)]
 getEdges NilT = []
 getEdges (Node x NilT NilT) = [] 
-getEdges (Node x lt rt) = (x, valueT lt) : (x, valueT rt) :
-                          getEdges lt ++ getEdges rt
+getEdges (Node x lt rt) = filter ((Nothing /=) . snd) ((Just x, valueT lt) : (Just x, valueT rt) :
+                          getEdges lt ++ getEdges rt)
 
 isEdge :: NTree -> (Int, Int) -> Bool
 isEdge NilT _ = False
-isEdge tree edge = edge `elem` getEdges tree
+isEdge tree edge = edge `elem` map (\(x,y) -> (fromJust x, fromJust y)) (getEdges tree)
 
 consElList :: Int -> [Int] -> [(Int,Int)]
 consElList _ [] = []
