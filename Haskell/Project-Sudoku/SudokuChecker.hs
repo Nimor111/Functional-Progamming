@@ -7,6 +7,8 @@ import Data.List
 import Data.Maybe
 
 type Board = [[Int]]
+type Box = [[Int]]
+type Group = [Int]
 
 checkRows :: Board -> Bool
 checkRows [] = True
@@ -20,23 +22,23 @@ checkCols xxs
   | sort (map head xxs) /= [1,2,3,4,5,6,7,8,9] = False
   | otherwise = checkCols (map tail xxs)
 
-buildThrees :: Board -> [[Int]]
+buildThrees :: Board -> Box
 buildThrees [] = []
 buildThrees xxs = buildGroup (take 3 three) : buildThrees (drop 3 three)
   where three = map (take 3) xxs
 
-buildAllThrees :: Board -> [[[Int]]]
+buildAllThrees :: Board -> [Box]
 buildAllThrees ([]:_) = []
 buildAllThrees xxs = buildThrees (map (take 3) xxs) : buildAllThrees (map (drop 3) xxs)
 
 checkThrees :: Board -> Bool
 checkThrees xxs = all (==True) (map checkGroup (concat (buildAllThrees xxs)))
 
-buildGroup :: Board -> [Int]
+buildGroup :: Board -> Group 
 buildGroup ([]:_) = []
 buildGroup xxs = map head xxs ++ buildGroup (map tail xxs)
 
-checkGroup :: [Int] -> Bool
+checkGroup :: Group -> Bool
 checkGroup xs = sort xs == [1,2,3,4,5,6,7,8,9]
 
 checkSudoku :: Maybe Board -> Bool

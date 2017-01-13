@@ -15,6 +15,8 @@ type Col = [Int]
 type Group = [Int]
 type Element = (Int, Int)
 type Choice = Int
+type Cell = Int
+type Number = Int
 
 main = do
   printBoard $ solveSudoku testBoard
@@ -41,20 +43,20 @@ testBoard = [[8,4,0,6,7,0,9,3,0],
 solveSudoku :: Board -> Maybe Board
 solveSudoku b = (filterEmpty . boards (getZeros b)) b
 
-getRowElements :: Board -> Int -> Row
+getRowElements :: Board -> Number -> Row
 getRowElements [] _ = []
 getRowElements (r:b) n 
   | n == 0 = r
   | otherwise = getRowElements b (n - 1) 
 
-getColElements :: Board -> Int -> Col
+getColElements :: Board -> Number -> Col
 getColElements [] _ = []
 getColElements ([]:_) _ = []
 getColElements b n
   | n == 0 = map head b
   | otherwise = getColElements (map tail b) (n - 1)
 
-getElementAtPosition :: Board -> Element -> Maybe Int
+getElementAtPosition :: Board -> Element -> Maybe Cell 
 getElementAtPosition [] _ = Nothing
 getElementAtPosition (r:b) (row, col)
   | row < 0 || col < 0 || row >= 9 || col >= 9 = Nothing
