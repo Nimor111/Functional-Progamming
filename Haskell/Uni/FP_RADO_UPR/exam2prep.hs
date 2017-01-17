@@ -1,8 +1,9 @@
 import Data.List
 
-data Tree a = Empty | Node a (Tree a) (Tree a)
+data Order = Online Float Int Int | Offline Float
+data Tree a = Empty | Node a (Tree a) (Tree a) deriving Show
 
-main = do
+main = print $ levelSum 3 exampleTree
   -- print $ minCount exampleTree 1
   -- print $ longestIncreasingPrefix [1, 3, 2]
   -- print $ longestIncreasingPrefix [1, 2, 3]
@@ -15,28 +16,69 @@ main = do
   -- print $ balance 50 [45, 5, 100]
   -- print $ balance 3 [2, 10, 15]
   -- print $ balance 1 [5, 10, 15, 36]
-  print $ repeat 3 " "
-  print $ repeater "Quack" 5 "!"
-    where 
-      repeat = repeater "I love Haskell"
+  -- print $ repeat 3 " "
+  -- print $ repeater "Quack" 5 "!"
+  --   where 
+  --     repeat = repeater "I love Haskell"
+  -- print $ isOnline (Online 1 2 3)
+  -- print $ timeUntilReceiving (Online 1.5 2 3)
+  -- print $ totalPrice [Online 2.5 1 1, Online 3 1 2, Offline 5.5]
+  -- print $ onlineOrders [Online 2.5 1 1, Online 3 1 2, Offline 5.5]
+  -- print $ isExpensive (Online 110.5 2 3)
+  -- print $ isExpensive (Offline 99.9)
+  -- print (Online 5.5 2 3)
+  -- print (Offline 4.53)
+  -- print $ Online 5 4 3 == Online 5 4 3
 
 exampleTree :: Tree Int
 exampleTree = Node 1
                 (Node 2 
                 (Node 3 Empty Empty)
                 (Node 4 Empty Empty))
-                Empty
+                (Node 6 Empty Empty)
 
-countNodes :: Tree a -> Int
-countNodes Empty = 0
-countNodes (Node _ lt rt) = 1 + countNodes lt + countNodes rt
+-- Problem 7 - Tree data type
+treeLevel :: Int -> Tree Int -> [Int]
+treeLevel _ Empty = [] 
+treeLevel 1 (Node e _ _) = [e] 
+treeLevel k (Node e lt rt) = treeLevel (k - 1) lt ++ treeLevel (k - 1) rt
 
-minCount :: Eq a => Tree a-> a -> Int
-minCount Empty _ = 0
-minCount (Node y lt rt) x
-  | x == y = if countNodes lt < countNodes rt then countNodes lt + 1 else countNodes rt + 1
-  | otherwise = minCount lt x + minCount rt x 
+levelSum :: Int -> Tree Int -> Int
+levelSum _ Empty = 0
+levelSum k tree = (sum . treeLevel k) tree
 
+-- Problem 6 - Order data type
+isOnline :: Order -> Bool
+isOnline Online{} = True
+isOnline _ = False
+
+timeUntilReceiving :: Order -> Int
+timeUntilReceiving (Offline _) = 0
+timeUntilReceiving (Online _ _ h) = h
+
+totalPrice :: [Order] -> Float
+totalPrice [] = 0
+totalPrice (Online p _ _:xs) = p + totalPrice xs
+totalPrice (Offline p:xs) = p + totalPrice xs
+
+onlineOrders :: [Order] -> Int
+onlineOrders [] = 0
+onlineOrders (Offline _:xs) = onlineOrders xs
+onlineOrders (Online{}:xs) = 1 + onlineOrders xs
+
+isExpensive :: Order -> Bool
+isExpensive (Offline p) = p > 100
+isExpensive (Online p _ _) = p > 100
+
+instance Show Order where
+  show (Online p n h) = show p ++ " " ++ show n ++ " " ++ show h
+  show (Offline p) = show p
+
+instance Eq Order where
+  (Online p n h) == (Online p1 n1 h1) = p == p1 && n == n1 && h == h1
+  (Offline p) == (Offline p1) = p == p1
+
+-- Problem 1 - Longest increasing prefix
 longestIncreasingPrefix :: Ord a => [a] -> [a]
 longestIncreasingPrefix [] = []
 longestIncreasingPrefix [x] = [x]
@@ -44,9 +86,11 @@ longestIncreasingPrefix (x:xs)
   | x >= head xs = [x]
   | otherwise = x : longestIncreasingPrefix xs
 
+-- Problem 2 - Reorder tuples
 reorderTuples :: Ord a => [(a, a)] -> [(a, a)]
 reorderTuples = map (\(x, y) -> if x < y then (y, x) else (x, y)) 
 
+-- Problem 3 - Merge and sort digits
 toDigits :: Int -> [Int]
 toDigits 0 = []
 toDigits n = nub (n `mod` 10 : toDigits (n `div` 10))
@@ -60,6 +104,7 @@ mergeAndSortDigits x y
     toNumber $ nub $ (reverse . toDigits) x ++ (reverse . toDigits) y
   | otherwise = toNumber $ nub (toDigits x ++ toDigits y)
 
+-- Problem 4 - Balance
 balance :: Int -> [Int] -> Int
 balance n xs = length xs - (length . takeOutEls n) xs 
 
@@ -73,6 +118,7 @@ takeOutEls n xs = helper 0 xs
       | y + x > n = []
       | otherwise = x : helper (y + x) xs
 
+-- Problem 5 - Repeater
 repeater :: String -> (Int -> String -> String)
 repeater str = \x y -> tail (helper x y)
   where
