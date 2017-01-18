@@ -78,9 +78,9 @@ getThreesByLocation b (row, col)
 isValidChoice :: Board -> Element -> Choice -> Bool
 isValidChoice b (row,col) c = notInRow && notInCol && notInGroup
   where
-    notInRow = notElem c $ b `getRowElements` row
-    notInCol = notElem c $ b `getColElements` col
-    notInGroup = notElem c $ b `getThreesByLocation` (row, col)
+    notInRow = c `notElem` (b `getRowElements` row)
+    notInCol = c `notElem` (b `getColElements` col)
+    notInGroup = c `notElem` (b `getThreesByLocation` (row, col))
 
 fillElement :: Board -> Choice -> Element -> Board
 fillElement [] _ _ = []
