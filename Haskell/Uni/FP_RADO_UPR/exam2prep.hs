@@ -3,7 +3,8 @@ import Data.List
 data Order = Online Float Int Int | Offline Float
 data Tree a = Empty | Node a (Tree a) (Tree a) deriving Show
 
-main = print $ levelSum 3 exampleTree
+main = do 
+  print $ levelSum 3 exampleTree
   -- print $ minCount exampleTree 1
   -- print $ longestIncreasingPrefix [1, 3, 2]
   -- print $ longestIncreasingPrefix [1, 2, 3]
@@ -29,6 +30,7 @@ main = print $ levelSum 3 exampleTree
   -- print (Online 5.5 2 3)
   -- print (Offline 4.53)
   -- print $ Online 5 4 3 == Online 5 4 3
+  print $ levelSum 2 exampleTree
 
 exampleTree :: Tree Int
 exampleTree = Node 1
@@ -38,14 +40,14 @@ exampleTree = Node 1
                 (Node 6 Empty Empty)
 
 -- Problem 7 - Tree data type
-treeLevel :: Int -> Tree Int -> [Int]
-treeLevel _ Empty = [] 
-treeLevel 1 (Node e _ _) = [e] 
-treeLevel k (Node e lt rt) = treeLevel (k - 1) lt ++ treeLevel (k - 1) rt
-
 levelSum :: Int -> Tree Int -> Int
 levelSum _ Empty = 0
-levelSum k tree = (sum . treeLevel k) tree
+levelSum 1 (Node e _ _) = e 
+levelSum k (Node e lt rt) = levelSum (k - 1) lt + levelSum (k - 1) rt
+
+-- levelSum :: Int -> Tree Int -> Int
+-- levelSum _ Empty = 0
+-- levelSum k tree = (sum . treeLevel k) tree
 
 -- Problem 6 - Order data type
 isOnline :: Order -> Bool
