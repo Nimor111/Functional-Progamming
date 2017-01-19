@@ -88,6 +88,7 @@ minDistance xs = Just (allDistances xs)
     allDistances [] = []
     allDistances (x:xs) = buildDistances x xs ++ allDistances xs
 
+-- problem 4 - maximize funcs
 maximize :: (Ord a, Num a) => [a -> a] -> (a -> a)
 maximize = max
   where
@@ -95,6 +96,7 @@ maximize = max
     max [] _ = error "Empty list"
     max xs x = head [g x| g <- xs, abs (g x) == maximum (map (abs . (\f -> f x)) xs)]
 
+-- problem 5 - max subtree
 data BT = Empty | Node Int BT BT
 maxCount :: BT -> Int -> Int
 maxCount Empty _ = 0
