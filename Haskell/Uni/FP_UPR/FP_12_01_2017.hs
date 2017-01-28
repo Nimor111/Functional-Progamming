@@ -40,7 +40,7 @@ getMaxCount xs = maximum $ map snd xs
 
 getMaxCounts :: [String] -> [Int]
 getMaxCounts [] = []
-getMaxCounts (x:xs) = quickSort ([getMaxCount (findNumOfOccurrences x)] ++ getMaxCounts xs)
+getMaxCounts (x:xs) = quickSort (getMaxCount (findNumOfOccurrences x) : getMaxCounts xs)
 
 ssort :: [String] -> [String]
 ssort [] = []

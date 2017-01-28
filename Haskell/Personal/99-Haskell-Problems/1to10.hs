@@ -27,7 +27,6 @@ isPalindrome xs = myReverse xs == xs
 
 data NestedList a = Elem a | List [NestedList a] deriving Show
 
-
 getElemValue :: NestedList a -> a
 getElemValue    (Elem i) = i
 getElemValue    _ = error "Not Elem type"
