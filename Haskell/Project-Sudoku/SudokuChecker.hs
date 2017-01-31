@@ -34,7 +34,7 @@ buildAllThrees xxs = buildThrees (map (take 3) xxs) : buildAllThrees (map (drop 
 checkThrees :: Board -> Bool
 checkThrees xxs = all (==True) (map checkGroup (concat (buildAllThrees xxs)))
 
-buildGroup :: Board -> Group 
+buildGroup :: Board -> Group
 buildGroup ([]:_) = []
 buildGroup xxs = map head xxs ++ buildGroup (map tail xxs)
 
@@ -44,7 +44,8 @@ checkGroup xs = sort xs == [1,2,3,4,5,6,7,8,9]
 checkSudoku :: Maybe Board -> Bool
 checkSudoku xxs = checkRows (fromJust xxs) && checkCols (fromJust xxs) && checkThrees (fromJust xxs)
 
-main = do 
+main :: IO ()
+main = do
   print $ checkSudoku (Just [[1,1,1,1,1,1,1,1,1],
                              [2,2,2,2,2,2,2,2,2],
                              [3,3,3,3,3,3,3,3,3],
