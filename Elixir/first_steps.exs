@@ -16,7 +16,9 @@ defmodule First do
   def element_at([_|xs], y), do: element_at(xs, y - 1)
 
   def myReverse([]), do: []
-  def myReverse(xs) when is_binary(xs), do: to_string(myReverse(to_char_list(xs)))
+  def myReverse(xs) when is_binary(xs), do: to_string(
+                                              myReverse(to_char_list(xs))
+                                            )
   def myReverse([x|xs]), do: myReverse(xs) ++ [x]
   def myReverse(_), do: []
 
