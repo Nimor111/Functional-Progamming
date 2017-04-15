@@ -76,3 +76,15 @@ dropEvery xs n = map fst $ filter (\(x,i) -> i `mod` n /= 0) $ zip xs [1..]
 
 dropEvery' :: Eq a => [a] -> Int -> [a]
 dropEvery' xs n = foldr (\(x, i) acc -> if i `mod` n /= 0 then x : acc else acc) [] $ zip xs [1..]
+
+-- Problem 17
+split :: Eq a => [a] -> Int -> ([a], [a])
+split xs n = (first xs n, second xs n)
+  where
+    first :: [a] -> Int -> [a]
+    first xs 0 = [] 
+    first (x:xs) n = x : first xs (n-1)
+
+    second :: [a] -> Int -> [a]
+    second xs 0 = xs
+    second (x:xs) n = second xs (n-1)
