@@ -1,5 +1,7 @@
 import OneToTen
 import Control.Applicative
+import Data.Maybe
+import Data.List
 
 data Operation a = Multiple Int a | Single a deriving Show
 
@@ -53,3 +55,24 @@ dupli'' xs = xs >>= (\x -> [x, x])
 -- applicative functor
 dupli''' :: [a] -> [a]
 dupli''' = (<**> [id, id])
+
+-- Problem 15
+repli :: Int -> [a] -> [a]
+repli num = foldr (\x acc -> prepend num x ++ acc) []
+  where
+    prepend :: Int -> a -> [a]
+    prepend 1 x = [x]
+    prepend n x = x : prepend (n - 1) x
+
+-- Problem 16
+removeAt :: Eq a => [a] -> Int -> [a]
+removeAt [] _ = []
+removeAt (x:xs) 1 = xs
+removeAt (x:xs) n = x : removeAt xs (n - 1)
+
+-- solution from website, amazing
+dropEvery :: Eq a => [a] -> Int -> [a]
+dropEvery xs n = map fst $ filter (\(x,i) -> i `mod` n /= 0) $ zip xs [1..]
+
+dropEvery' :: Eq a => [a] -> Int -> [a]
+dropEvery' xs n = foldr (\(x, i) acc -> if i `mod` n /= 0 then x : acc else acc) [] $ zip xs [1..]
