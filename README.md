@@ -1,4 +1,4 @@
-# FUNCTIONAL PROGRAMMING <3
+# FUNCTIONAL PROGRAMMING
 
 Repo for my functional programming exercises and things I learn
-Haskell + Racket + Elixir code
+Haskell + Racket code
