@@ -80,3 +80,7 @@ words' (c:ss) = foldr step [] (c:ss) ++ words' (drop 1 (dropWhile (not . isSpace
 unlines' :: [String] -> String
 unlines' [] = []
 unlines' xs = foldr (\x acc -> x ++ "\n" ++ acc) "" xs
+
+suffixes :: [a] -> [[a]]
+suffixes xs@(_:xs') = xs : suffixes xs'
+suffixes _ = []
