@@ -1,0 +1,6 @@
+test input
+i like haskell
+haskell is great
+i/o is fun
+
+123456789
