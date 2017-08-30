@@ -47,6 +47,7 @@ getElemValue    (Elem i) = i
 getElemValue    _ = error "Not Elem type"
 
 getListValues :: NestedList a -> [a]
+getListValues (Elem a) = [a]
 getListValues (List []) = []
 getListValues (List (x:xs)) = getElemValue x : getListValues (List xs)
 
