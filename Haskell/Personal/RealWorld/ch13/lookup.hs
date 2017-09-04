@@ -9,6 +9,9 @@ myLookup key ((x, y) : xs)
 mapFromAl :: Ord a => [(a, b)] -> Map.Map a b
 mapFromAl = Map.fromList
 
+mapFromAl' :: Ord a => [(a, b)] -> Map.Map a b
+mapFromAl' = foldr (\(k, v) acc -> Map.insert k v acc) Map.empty
+
 split :: Eq a => a -> [a] -> [[a]]
 split _ [] = [[]]
 split delim str =
