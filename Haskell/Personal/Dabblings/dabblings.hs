@@ -1,4 +1,4 @@
-import Data.List
+import           Data.List
 
 listCountOfRepeating :: Eq a => [a] -> [Int]
 listCountOfRepeating = map length . group
@@ -26,4 +26,4 @@ rle xs = helper 1 xs
     helper count (x:xs)
       | x == head xs = helper (count + 1) xs
       | count == 1 && x /= head xs = x : helper 1 xs
-      | otherwise = show count ++ [x] ++ helper 1 xs 
+      | otherwise = show count ++ [x] ++ helper 1 xs

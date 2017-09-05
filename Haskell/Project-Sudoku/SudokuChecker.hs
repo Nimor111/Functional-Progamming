@@ -3,8 +3,8 @@ module SudokuChecker
    buildAllThrees)
   where
 
-import Data.List
-import Data.Maybe
+import           Data.List
+import           Data.Maybe
 
 type Board = [[Int]]
 type Box = [[Int]]
@@ -36,7 +36,7 @@ checkThrees xxs = all (==True) (map checkGroup (concat (buildAllThrees xxs)))
 
 buildGroup :: Board -> Group
 buildGroup ([]:_) = []
-buildGroup xxs = map head xxs ++ buildGroup (map tail xxs)
+buildGroup xxs    = map head xxs ++ buildGroup (map tail xxs)
 
 checkGroup :: Group -> Bool
 checkGroup xs = sort xs == [1,2,3,4,5,6,7,8,9]
