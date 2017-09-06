@@ -3,17 +3,17 @@ module VigenereCipher (
   -- vDecode
 ) where
 
-import           Data.Char (chr, ord)
+import           Data.Char (chr, isSpace, ord)
 
 generateKeywordString :: String -> String -> String
 generateKeywordString source target = helper source target target
   where
     helper :: String -> String -> String -> String
     helper [] _ _ = []
-    helper (s:ss) target@(t:ts) ot
-      | s == ' ' = ' ' : helper ss target ot
-      | null ts = t : helper ss ot ot
-      | otherwise = t : helper ss ts ot
+    helper (s:ss) target@(t:ts) orig
+      | isSpace s = ' ' : helper ss target orig
+      | null ts = t : helper ss orig orig
+      | otherwise = t : helper ss ts orig
 
 getAlphabetKey :: Char -> Int
 getAlphabetKey c = ord c - 65
