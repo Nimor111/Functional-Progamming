@@ -26,7 +26,14 @@ getCorrespondingLetter sc tc
   where
     value = ord sc + getAlphabetKey tc
 
+-- using folds
 vEncode :: String -> String -> String
 vEncode source key = foldr (\(x,y) acc -> getCorrespondingLetter x y : acc) [] letters
+  where
+    letters = zip source (generateKeywordString source key)
+
+-- using list monad bind
+vEncode' :: String -> String -> String
+vEncode' source key = letters >>= (\(x, y) -> [getCorrespondingLetter x y])
   where
     letters = zip source (generateKeywordString source key)
