@@ -18,22 +18,22 @@ generateKeywordString source target = helper source target target
 getAlphabetKey :: Char -> Int
 getAlphabetKey c = ord c - 65
 
-getCorrespondingLetter :: Char -> Char -> Char
-getCorrespondingLetter ' ' ' ' = ' '
+getCorrespondingLetter :: Char -> Char -> String
+getCorrespondingLetter ' ' ' ' = " "
 getCorrespondingLetter sc tc
-  | value > 90 = chr $ value - 26
-  | otherwise = chr value
+  | value > 90 = [chr $ value - 26]
+  | otherwise = [chr value]
   where
     value = ord sc + getAlphabetKey tc
 
 -- using folds
 vEncode :: String -> String -> String
-vEncode source key = foldr (\(x,y) acc -> getCorrespondingLetter x y : acc) [] letters
+vEncode source key = foldr (\(x,y) acc -> getCorrespondingLetter x y ++ acc) [] letters
   where
     letters = zip source (generateKeywordString source key)
 
 -- using list monad bind
 vEncode' :: String -> String -> String
-vEncode' source key = letters >>= (\(x, y) -> [getCorrespondingLetter x y])
+vEncode' source key = letters >>= uncurry getCorrespondingLetter
   where
     letters = zip source (generateKeywordString source key)
