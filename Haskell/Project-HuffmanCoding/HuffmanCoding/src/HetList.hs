@@ -5,7 +5,7 @@ module HetList where
 type HetList = [Element]
 
 data Element where
-  Element :: (Read a, Show a) => a -> Element
+  Element :: Show a => a -> Element
 
 instance Show Element where
   show (Element a) = show a

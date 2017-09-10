@@ -1,6 +1,4 @@
-module Lib (
-  someFunc
-) where
+module Lib where
 
 import           HetList
 import           HuffmanTree
