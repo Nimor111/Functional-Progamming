@@ -1,0 +1,6 @@
+5
+True
+ivan
+6
+2
+Just 5
