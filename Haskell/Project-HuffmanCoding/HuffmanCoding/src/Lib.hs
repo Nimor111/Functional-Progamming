@@ -6,11 +6,11 @@ import           HuffmanTree
 mapElements :: [String] -> HetList
 mapElements = foldr (\x acc -> acc ++ [Element x]) []
 
-getInputFromFile :: FilePath -> IO ()
+getInputFromFile :: FilePath -> IO HetList
 getInputFromFile file = do
   content <- readFile file
   let elements = words content in
-      print $ mapElements elements
+      return $ reverse $ mapElements elements
 
 getInput :: IO HetList
 getInput = do

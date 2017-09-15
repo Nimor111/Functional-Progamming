@@ -1,12 +1,17 @@
 module HuffmanTree where
 
-import           Data.List (nub)
+import           Data.List (nub, (\\))
 import           HetList
 
 data HuffTree a =
   Empty
   | Node (HuffTree a) Int (HuffTree a)
   deriving Show
+
+data HuffMinTuple a =
+  TEmpty
+  | Single (HuffTree a)
+  | Tuple (HuffTree a, HuffTree a)
 
 instance Eq (HuffTree a) where
   (Node _ a _) == (Node _ b _) = a == b
@@ -29,11 +34,28 @@ transformInput hs = nub $ foldr (\x acc -> (x, countOccurrences hs x) : acc) [] 
 buildFirstTrees :: [(Element, Int)] -> [HuffTree a]
 buildFirstTrees = foldr ((\x acc -> Node Empty x Empty : acc) .snd) []
 
-combineTrees :: HuffTree a -> HuffTree a -> HuffTree a
-combineTrees (Node l a r) (Node l1 a1 r1) = Node (Node l a r) (a + a1) (Node l1 a1 r1)
+combineTrees :: [HuffTree a] -> HuffTree a
+combineTrees [] = Empty
+combineTrees [x] = x
+combineTrees [Node l a r, Node l1 a1 r1] = Node (Node l1 a1 r1) (a + a1) (Node l a r)
 
-findMinTrees :: [HuffTree a] -> [HuffTree a]
-findMinTrees hs = undefined
+findMinTrees :: Eq a => [HuffTree a] -> [HuffTree a]
+findMinTrees [] = []
+findMinTrees [x] = [x]
+findMinTrees hs = [minimum hs, minimum $ removeMin hs]
+  where
+    removeMin :: Eq a => [HuffTree a] -> [HuffTree a]
+    removeMin hs = hs \\ [minimum hs]
+
+buildTree :: Eq a => [HuffTree a] -> Maybe (HuffTree a)
+buildTree []  = Nothing
+buildTree [x] = Just x
+buildTree hs  = buildTree (combineTrees mins : removeMins hs mins)
+  where
+    removeMins :: Eq a => [HuffTree a] -> [HuffTree a] -> [HuffTree a]
+    removeMins [] _  = []
+    removeMins hs ss = hs \\ ss
+    mins = findMinTrees hs
 
 huffman :: HetList -> String
 huffman = undefined
